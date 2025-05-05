@@ -49,10 +49,20 @@ The app uses 5 pre-defined rules derived from financial ratios. Each rule votes 
    ```bash
    open index.html
 
-
-   Or double-click the index.html file in any browser.
+   * Or double-click the index.html file in any browser.
 
 ### 🌐 Try Online
 
 [https://rizauddin.github.io/bankruptcy-predictor](https://rizauddin.github.io/bankruptcy-predictor)
+
+### 📚 Use Cases
+* 🧑‍🏫 Financial education & workshops
+* 🧪 Explainable AI or rule-based systems demo
+* 💻 Lightweight tool for early bankruptcy screening
+
+### 🧑‍💻 Built With
+* HTML5
+* CSS3
+* Vanilla JavaScript
+* [html2pdf.js](https://github.com/eKoopmans/html2pdf) for PDF export
 
