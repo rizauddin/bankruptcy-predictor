@@ -48,7 +48,8 @@ The app uses 5 pre-defined rules derived from financial ratios. Each rule votes 
 2. Open the app:
    ```bash
    open index.html
-  ```
+
+
    Or double-click the index.html file in any browser.
 
 ### 🌐 Try Online
