@@ -66,3 +66,7 @@ Then open a pull request on GitHub:
 ### 🙋 Need Help?
 If you're unsure how to begin, feel free to [open an issue](https://github.com/rizauddin/bankruptcy-predictor/issues) with your question or idea.
 I’m happy to guide you!
+
+Thanks again for your interest and support 🙌
+Happy coding!
+— Rizauddin
