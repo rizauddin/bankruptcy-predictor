@@ -1,0 +1,26 @@
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+
+# PDF output files
+*.pdf
+
+# Screenshot or preview images
+screenshot.png
+*.png
+*.jpg
+
+# Optional: if you use Node.js tooling later
+node_modules/
+dist/
+build/
+
+# Optional: backup files
+*.bak
+*.tmp
+*~
