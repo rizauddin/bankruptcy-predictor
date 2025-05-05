@@ -45,3 +45,13 @@ The app uses 5 pre-defined rules derived from financial ratios. Each rule votes 
    ```bash
    git clone https://github.com/yourusername/bankruptcy-predictor.git
    cd bankruptcy-predictor
+2. Open the app:
+   ```bash
+   open index.html
+
+   Or double-click the index.html file in any browser.
+
+### 🌐 Try Online
+
+[https://rizauddin.github.io/bankruptcy-predictor](https://rizauddin.github.io/bankruptcy-predictor)
+
