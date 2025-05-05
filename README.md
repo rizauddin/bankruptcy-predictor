@@ -8,14 +8,14 @@
 
 ## 🔍 Features
 
-- 🎚 Real-time input sliders for five financial indicators:
+- Real-time input sliders for five financial indicators:
   - Debt to Equity Ratio
   - Return on Equity (ROE)
   - Gross Margin
   - Reinvestment Rate
   - Assets / Equity Ratio
 - 📊 Emoji-based voting bar (🟩 = NON BANKRUPT, ⬜ = BANKRUPT)
-- ✅ Live prediction displayed instantly without clicking any button
+- ✅ Live prediction is displayed instantly without clicking any button
 - 🧠 Rule-based decision engine with visible rule matching
 - 📝 Tooltip explanation on voting bar
 - 📥 Download full result as a styled PDF
