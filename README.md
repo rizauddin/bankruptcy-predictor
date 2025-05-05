@@ -67,3 +67,7 @@ The app uses 5 pre-defined rules derived from financial ratios. Each rule votes 
 * Vanilla JavaScript
 * [html2pdf.js](https://github.com/eKoopmans/html2pdf) for PDF export
 
+### 🤝 Contributing
+Contributions are welcome! If you'd like to improve this project, fix bugs, or suggest features, please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
+
+
