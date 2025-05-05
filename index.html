@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bankruptcy Predictor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .value-display {
+      font-weight: normal;
+      color: #333;
+      float: right;
+    }
+
+    #result {
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      text-align: center;
+      font-weight: bold;
+      color: #00509e;
+    }
+
+    #bar-container {
+      text-align: center;
+      font-size: 1.3rem;
+      margin-top: 0.5rem;
+      color: #333;
+    }
+
+    .tooltip {
+      position: relative;
+      cursor: help;
+      display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 6px 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; 
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #explanation {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #555;
+    }
+
+    #input-summary {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    #input-summary h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="page">
+    <div class="container">
+      <h1>Bankruptcy Predictor</h1>
+
+      <label for="de_ratio">Debt to Equity Ratio:
+        <span class="value-display" id="de_ratio_display">0.5</span>
+      </label>
+      <input type="range" min="0" max="5" step="0.01" value="0.5" id="de_ratio" />
+
+      <label for="roe">Return on Equity (ROE %):
+        <span class="value-display" id="roe_display">-0.2</span>
+      </label>
+      <input type="range" min="-1" max="1" step="0.01" value="-0.2" id="roe" />
+
+      <label for="gross_margin">Gross Margin (%):
+        <span class="value-display" id="gross_margin_display">0.05</span>
+      </label>
+      <input type="range" min="-0.5" max="1" step="0.01" value="0.05" id="gross_margin" />
+
+      <label for="reinvestment_rate">Reinvestment Rate:
+        <span class="value-display" id="reinvestment_rate_display">-0.2</span>
+      </label>
+      <input type="range" min="-1" max="1" step="0.01" value="-0.2" id="reinvestment_rate" />
+
+      <label for="leverage">Assets / Equity Ratio:
+        <span class="value-display" id="leverage_display">2.5</span>
+      </label>
+      <input type="range" min="0" max="5" step="0.01" value="2.5" id="leverage" />
+
+      <div id="result">Prediction: NON BANKRUPT ✅</div>
+
+      <div id="bar-container">
+        📊 NON BANKRUPT 
+        <span id="bar" class="tooltip">[🟩⬜]
+          <span class="tooltiptext">🟩 = NON BANKRUPT vote<br>⬜ = BANKRUPT vote</span>
+        </span> 
+        BANKRUPT
+      </div>
+
+      <div id="explanation">(based on majority voting from rule matches)</div>
+
+      <div id="input-summary">
+        <h3>Input Summary</h3>
+        <ul>
+          <li>Debt to Equity Ratio: <span id="val-de_ratio">0.5</span></li>
+          <li>Return on Equity (ROE): <span id="val-roe">-0.2</span></li>
+          <li>Gross Margin: <span id="val-gross_margin">0.05</span></li>
+          <li>Reinvestment Rate: <span id="val-reinvestment_rate">-0.2</span></li>
+          <li>Assets / Equity Ratio: <span id="val-leverage">2.5</span></li>
+        </ul>
+      </div>
+
+      <button onclick="downloadPDF()">Download Full Page as PDF</button>
+
+      <p style="font-size: 12px;text-align:center">© Copyright 2025 <a href="https://rizauddin.com">rizauddin.com</a>. All Rights Reserved.</p>
+
+      <p style="font-size: 12px;text-align:center">If you use this app, please cite this article:<br>
+      Zainol, A. Z., Saian, R., Kin, T. Y., Mohd Razali, M. H., &amp; Bakar, S. A. (2024). An enhanced ant colony optimisation algorithm with the hellinger distance for shariah-compliant securities companies bankruptcy prediction. In Journal of Information and Communication Technology (Vol. 23, Issue 1, pp. 1–24). https://doi.org/10.32890/jict2024.23.1.1</p>
+
+
+      <p style="font-size: 12px;text-align:center"><b>Disclaimer:</b> This application is provided strictly for educational purposes. Please be aware that this application does not collect, store, or process any personal data from its users. While every effort has been made to ensure the accuracy and reliability of the information within the application, the creators and contributors of this application are not responsible for any errors, omissions, misinterpretations, or actions taken based on this information. This application is intended for use as an educational tool only and should not be relied upon for professional or commercial purposes. Any use of the application is at the user's sole risk, and it should not replace professional advice or expertise in specific areas.</p>
+
+
+
+
+
+  </div>
+
+
+
+  <script>
+    function predict() {
+      const de = parseFloat(document.getElementById('de_ratio').value);
+      const roe = parseFloat(document.getElementById('roe').value);
+      const gm = parseFloat(document.getElementById('gross_margin').value);
+      const reinvest = parseFloat(document.getElementById('reinvestment_rate').value);
+      const leverage = parseFloat(document.getElementById('leverage').value);
+
+      const rules = [];
+      const matched = [];
+
+      if (de <= 0.735) {
+        rules.push('NON BANKRUPT');
+        matched.push('Debt to Equity ≤ 0.735 → NON BANKRUPT');
+      }
+      if (roe <= -0.245) {
+        rules.push('BANKRUPT');
+        matched.push('ROE ≤ -0.245 → BANKRUPT');
+      }
+      if (gm > 0.045) {
+        rules.push('NON BANKRUPT');
+        matched.push('Gross Margin > 0.045 → NON BANKRUPT');
+      }
+      if (reinvest <= -0.425) {
+        rules.push('BANKRUPT');
+        matched.push('Reinvestment Rate ≤ -0.425 → BANKRUPT');
+      }
+      if (leverage >= 1.825 && leverage <= 3.255) {
+        rules.push('NON BANKRUPT');
+        matched.push('Assets/Equity in [1.825, 3.255] → NON BANKRUPT');
+      }
+
+      const bankruptVotes = rules.filter(r => r === 'BANKRUPT').length;
+      const nonBankruptVotes = rules.filter(r => r === 'NON BANKRUPT').length;
+      const result = nonBankruptVotes > bankruptVotes ? 'NON BANKRUPT ✅' : 'BANKRUPT ⚠️';
+
+      // Voting bar: based on matched rules only
+      const barContent = `[${'🟩'.repeat(nonBankruptVotes)}${'⬜'.repeat(bankruptVotes)}]`;
+
+      document.getElementById('result').textContent = `Prediction: ${result}`;
+      document.getElementById('bar').innerHTML = barContent + '<span class="tooltiptext">🟩 = NON BANKRUPT vote<br>⬜ = BANKRUPT vote</span>';
+
+      document.getElementById('explanation').innerHTML =
+        matched.length > 0
+          ? '(Rules matched:<br>' + matched.join('<br>') + ')'
+          : '(No rule matched. Default: BANKRUPT)';
+
+      // Input Summary
+      document.getElementById('val-de_ratio').textContent = de;
+      document.getElementById('val-roe').textContent = roe;
+      document.getElementById('val-gross_margin').textContent = gm;
+      document.getElementById('val-reinvestment_rate').textContent = reinvest;
+      document.getElementById('val-leverage').textContent = leverage;
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById('page');
+      const opt = {
+        margin: 0,
+        filename: 'bankruptcy-prediction.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+
+    const syncSlider = (id) => {
+      const input = document.getElementById(id);
+      const display = document.getElementById(id + '_display');
+      input.addEventListener('input', () => {
+        display.textContent = input.value;
+        predict();
+      });
+    };
+
+    ['de_ratio', 'roe', 'gross_margin', 'reinvestment_rate', 'leverage'].forEach(syncSlider);
+    predict();
+  </script>
+</body>
+</html>
