@@ -14,13 +14,14 @@ Start by creating your own copy of the repo:
 ```bash
 git clone https://github.com/rizauddin/bankruptcy-predictor.git
 cd bankruptcy-predictor
+```
 
 ### 2. Create a New Branch
 Give your branch a clear and meaningful name. For example,
 
 ```bash
 git checkout -b feature/add-tooltip
-
+```
 
 ### 3. Make Your Changes
 Edit the HTML, CSS, or JavaScript files in your editor.
@@ -36,13 +37,13 @@ Use clear and descriptive commit messages:
 ```bash
 git add .
 git commit -m "Add tooltip to visual voting bar"
-
+```
 
 ### 5. Push to Your Fork and Create a Pull Request
 
 ```bash
 git push origin feature/add-tooltip
-
+```
 
 Then open a pull request on GitHub:
 👉 [https://github.com/rizauddin/bankruptcy-predictor/pulls](https://github.com/rizauddin/bankruptcy-predictor/pulls)
